@@ -10,13 +10,27 @@ import {image_loading_base64, image_loading_url, panda_base64} from "../../resou
 import NavbarItems from "../Navbar";
 
 const Home = () => {
-    const [textInput, setTextInput] = useState("");
-    const [auth, setAuth] = useState();
-    const [user, setUser] = useState();
-    const [quality, setQuality] = useState("draft");
-    const [artworks, setArtworks] = useState([]);
+    // function to navigate between pages
     const navigate = useNavigate();
 
+    // reference to firebase auth
+    const [auth, setAuth] = useState();
+    // reference to logged-in user
+    const [user, setUser] = useState();
+
+    // list of community artworks
+    const [artworks, setArtworks] = useState([]);
+
+    // allow user to type in prompt for art
+    const [textInput, setTextInput] = useState("");
+
+    // allow user to set quality of image
+    const [quality, setQuality] = useState("draft");
+    const qualityOptions = [];
+
+    /**
+     * Use effect hook to run on page render
+     */
     useEffect(() => {
         // check auth state
         const auth = getAuth();
@@ -50,6 +64,58 @@ const Home = () => {
         });
     }, [navigate]);
 
+    /**
+     * Function to create db object
+     */
+    const generateImage = () => {
+        const userId = user?.uid || "no_uid";
+
+        if (!textInput || textInput.trim().length === 0) {
+            alert("Input cannot be blank.");
+            return;
+        }
+
+        const db = getFirestore();
+        const docRef = doc(db, 'art', `${userId}_${v4()}`);
+
+        // const base64Data = image_loading_base64;
+        // const base64Url = `data:image/png;base64, ${base64Data}`;
+        const imageUrl = image_loading_url;
+
+        const userObj = Object.assign({}, JSON.parse(JSON.stringify(user)));
+
+        if (userObj.stsTokenManager) {
+            delete userObj['stsTokenManager'];
+        }
+
+        if (userObj.apiKey) {
+            delete userObj['apiKey'];
+        }
+
+        setDoc(docRef, {
+            id: v4(),
+            text: textInput,
+            prompt: textInput,
+            quality: quality,
+            drawer: 'vqgan',
+            aspect: 'widescreen',
+            iterations: 100,
+            initImage: '',
+            imageUrl: imageUrl,
+            uid: userId,
+            user: userObj,
+            loading: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }, { merge: true }).then(() => {
+            console.log('created art');
+            setTextInput('');
+        });
+    }
+
+    /**
+     * Render HTML
+     */
     return (
         <div>
             <Navbar bg="light" expand="lg">
@@ -94,49 +160,7 @@ const Home = () => {
 
                             <Button variant="primary" type="submit" onClick={(e) => {
                                 e.preventDefault();
-                                const userId = user?.uid || "no_uid";
-
-                                if (!textInput || textInput.trim().length === 0) {
-                                    alert("Input cannot be blank.");
-                                    return;
-                                }
-
-                                const db = getFirestore();
-                                const docRef = doc(db, 'art', `${userId}_${v4()}`);
-
-                                // const base64Data = image_loading_base64;
-                                // const base64Url = `data:image/png;base64, ${base64Data}`;
-                                const imageUrl = image_loading_url;
-
-                                const userObj = Object.assign({}, JSON.parse(JSON.stringify(user)));
-
-                                if (userObj.stsTokenManager) {
-                                    delete userObj['stsTokenManager'];
-                                }
-
-                                if (userObj.apiKey) {
-                                    delete userObj['apiKey'];
-                                }
-
-                                setDoc(docRef, {
-                                    id: v4(),
-                                    text: textInput,
-                                    prompt: textInput,
-                                    quality: quality,
-                                    drawer: 'vqgan',
-                                    aspect: 'widescreen',
-                                    iterations: 100,
-                                    initImage: '',
-                                    imageUrl: imageUrl,
-                                    uid: userId,
-                                    user: userObj,
-                                    loading: true,
-                                    createdAt: new Date(),
-                                    updatedAt: new Date()
-                                }, { merge: true }).then(() => {
-                                    console.log('created art');
-                                    setTextInput('');
-                                });
+                                generateImage();
                             }}>
                                 Generate
                             </Button>

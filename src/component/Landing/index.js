@@ -1,7 +1,6 @@
-import bg_image from "../../resource/image/background.png";
+import bg_image from "../../resource/image/background.webp";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import {StyledFirebaseAuth} from "react-firebaseui";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
@@ -46,13 +45,13 @@ const Landing = () => {
     return (<div className="landing">{authChecked && <section>
         <div className="hero-container">
             <Rain numDrops='25'/>
-            <div className="environment"/>
+            <div className="environment" style={{backgroundImage: `url(${bg_image})`}} />
             <h2 className="hero glitch layers" data-text="葛飾北斎"><span>葛飾北斎</span></h2>
             <br/>
             <button className="cybr-btn" onClick={() => auth.signInWithPopup(provider)}>
                 Sign In With Google<span aria-hidden>_</span>
                 <span aria-hidden className="cybr-btn__glitch">Sign In With Google_</span>
-                <span aria-hidden className="cybr-btn__tag">R25</span>
+                <span aria-hidden className="cybr-btn__tag">UWU</span>
             </button>
         </div>
     </section>}

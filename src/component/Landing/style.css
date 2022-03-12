@@ -13,15 +13,17 @@ a {
     color: #ccc;
 }
 
-section {
-    padding: 0;
-}
-
+/* Styling for the rain drops */
 .drop {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(rgba(255,255,255,0.5))  );
     overflow: hidden;
 }
 
+section {
+    padding: 0;
+}
+
+/* Styling for background and title */
 .hero {
     font-size: clamp(40px, 10vw, 100px);
     line-height: 1;
@@ -113,7 +115,7 @@ section {
 }
 
 .paths {
-    animation: paths 5s step-end infinite;
+    animation: paths 10s step-end infinite;
 }
 
 @keyframes paths {
@@ -509,8 +511,6 @@ section {
     bottom: 0;
     opacity: 0.5;
     filter: blur(5px);
-    background: url(https://i.pinimg.com/originals/10/31/13/103113a82009e645b16112fb5ffdb293.jpg)
-    center no-repeat;
     background-size: cover;
     height:100vh;
 }
@@ -530,7 +530,7 @@ section {
 
     --primary: hsl(
             var(--primary-hue),
-            85%,
+            100%,
             calc(var(--primary-lightness, 50) * 1%)
     );
     --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);

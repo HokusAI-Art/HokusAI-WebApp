@@ -239,7 +239,7 @@ const Home = () => {
                     </Container>
 
                     <Container>
-                        <h2 style={{textAlign: "center"}}>Community Master Pieces</h2>
+                        <h2 style={{textAlign: "center"}}>Community Masterpieces</h2>
                         <div style={{display: "flex", justifyContent: "center", alignContent: "center", alignItems: "center", flexWrap: "wrap"}}>
                             {
                                 artworks.map((artwork) => {

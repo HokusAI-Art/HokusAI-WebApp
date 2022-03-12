@@ -155,98 +155,104 @@ const Home = () => {
             </Container>
         </Navbar>
 
-        {user && <Container style={{}} >
-            <Container style={{margin: '10px'}} className={"centered"}>
-                <h2 style={{textAlign: "center"}}>Create Art</h2>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formTextInput">
-                        <Form.Label>Prompt</Form.Label>
-                        <Form.Control type="text" placeholder="Enter thoughts"
-                                      value={textInput}
-                                      onChange={(event) => {
-                                          setTextInput(event.target.value);
-                                      }}/>
+        {user && <Container className='home-body' style={{}}>
+            <form className="form" action="" method="get">
+                <div className="form__image"></div>
+                <svg className="form__logo"
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="942px" height="130px">
+                    <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"
+                          y="53.5940000000001px">
+                        <tspan font-size="100px" font-family="Cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
+                    </text>
+                </svg>
 
-                        <div className="mb-1">
-                            <label htmlFor="quality" className="form-label">Quality</label><br/>
+                <div className="input">
+                    <input id="name" type="text" className="input__element" placeholder=" "
+                           onChange={(event) => {
+                               setTextInput(event.target.value);
+                           }}/>
+                    <label className="input__label" htmlFor="name">Prompt</label>
+                </div>
+                <Form.Group className="mb-3" controlId="formTextInput">
+                    <div className="mb-1">
+                        <label htmlFor="quality" className="form-label">Quality</label><br/>
 
-                            {qualityOptions.map((qualityOption) => {
-                                return (<>
-                                    <input key={`input-${qualityOption}`} type="radio"
-                                           className="btn-check" name="quality" value={qualityOption}
-                                           id={`quality-${qualityOption}`} autoComplete="off"
-                                           onClick={(event) => {
-                                               console.log('set quality to ', event.target.value);
-                                               setQuality(event.target.value);
-                                           }}/>
-                                    <label key={`label-${qualityOption}`}
-                                           className="btn btn btn-secondary"
-                                           htmlFor={`quality-${qualityOption}`}>{qualityOption}</label>
-                                </>);
-                            })}
+                        {qualityOptions.map((qualityOption) => {
+                            return (<>
+                                <input key={`input-${qualityOption}`} type="radio"
+                                       className="btn-check" name="quality" value={qualityOption}
+                                       id={`quality-${qualityOption}`} autoComplete="off"
+                                       onClick={(event) => {
+                                           console.log('set quality to ', event.target.value);
+                                           setQuality(event.target.value);
+                                       }}/>
+                                <label key={`label-${qualityOption}`}
+                                       className="btn btn btn-secondary"
+                                       htmlFor={`quality-${qualityOption}`}>{qualityOption}</label>
+                            </>);
+                        })}
 
-                            <div id="emailHelp" className="form-text">Better quality takes longer time to
-                                generate
-                            </div>
+                        <div id="emailHelp" className="form-text">Better quality takes longer time to
+                            generate
                         </div>
+                    </div>
 
-                        <div className="mb-1">
-                            <label htmlFor="iterations" className="form-label">Iterations</label><br/>
+                    <div className="mb-1">
+                        <label htmlFor="iterations" className="form-label">Iterations</label><br/>
 
-                            {Object.keys(iterationOptions).map((iterationOption) => {
-                                return (<>
-                                    <input key={`input-${iterationOption}`} type="radio"
-                                           className="btn-check" name="iterations"
-                                           value={iterationOption} id={`iterations-${iterationOption}`}
-                                           autoComplete="off" onClick={(event) => {
-                                        console.log('set iterations to ', iterationOptions[event.target.value]);
-                                        setIterations(iterationOptions[event.target.value]);
-                                    }}/>
-                                    <label key={`label-${iterationOption}`}
-                                           className="btn btn btn-secondary"
-                                           htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
-                                </>);
-                            })}
+                        {Object.keys(iterationOptions).map((iterationOption) => {
+                            return (<>
+                                <input key={`input-${iterationOption}`} type="radio"
+                                       className="btn-check" name="iterations"
+                                       value={iterationOption} id={`iterations-${iterationOption}`}
+                                       autoComplete="off" onClick={(event) => {
+                                    console.log('set iterations to ', iterationOptions[event.target.value]);
+                                    setIterations(iterationOptions[event.target.value]);
+                                }}/>
+                                <label key={`label-${iterationOption}`}
+                                       className="btn btn btn-secondary"
+                                       htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
+                            </>);
+                        })}
 
-                            <div id="emailHelp" className="form-text">More iterations takes longer time to
-                                generate
-                            </div>
+                        <div id="emailHelp" className="form-text">More iterations takes longer time to
+                            generate
                         </div>
+                    </div>
 
-                        <div className="mb-1">
-                            <label htmlFor="drawer" className="form-label">Style</label><br/>
+                    <div className="mb-1">
+                        <label htmlFor="drawer" className="form-label">Style</label><br/>
 
-                            {drawerOptions.map((drawerOption) => {
-                                return (<>
-                                    <input key={`input-${drawerOption}`} type="radio"
-                                           className="btn-check" name="drawer" value={drawerOption}
-                                           id={`drawer-${drawerOption}`} onClick={(event) => {
-                                        console.log('set drawer to ', event.target.value);
-                                        setDrawer(event.target.value);
-                                    }}/>
-                                    <label key={`label-${drawerOption}`}
-                                           className="btn btn btn-secondary"
-                                           htmlFor={`drawer-${drawerOption}`}>{drawerOption}</label>
-                                </>);
-                            })}
+                        {drawerOptions.map((drawerOption) => {
+                            return (<>
+                                <input key={`input-${drawerOption}`} type="radio"
+                                       className="btn-check" name="drawer" value={drawerOption}
+                                       id={`drawer-${drawerOption}`} onClick={(event) => {
+                                    console.log('set drawer to ', event.target.value);
+                                    setDrawer(event.target.value);
+                                }}/>
+                                <label key={`label-${drawerOption}`}
+                                       className="btn btn btn-secondary"
+                                       htmlFor={`drawer-${drawerOption}`}>{drawerOption}</label>
+                            </>);
+                        })}
 
-                            <div id="emailHelp" className="form-text">Method that will be used for image
-                                generation
-                            </div>
+                        <div id="emailHelp" className="form-text">Method that will be used for image
+                            generation
                         </div>
+                    </div>
 
-                    </Form.Group>
-
-                    <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0}
-                            variant="primary" type="submit" className={"btn btn-primary btn-lg"}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                generateImage();
-                            }}>
-                        Generate
-                    </Button>
-                </Form>
-            </Container>
+                </Form.Group>
+                <button type="button" className="button"
+                        disabled={notAllOptionsSelected() || textInput.trim().length === 0} onClick={(e) => {
+                    e.preventDefault();
+                    generateImage();
+                }}>
+                    <div className="button__label">Continue</div>
+                    <div className="button__icon"></div>
+                </button>
+            </form>
 
             <Container>
                 <h2 style={{textAlign: "center"}}>Community Master Pieces</h2>

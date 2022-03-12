@@ -51,3 +51,27 @@ label.btn {
     font-weight: 600;
     text-transform: uppercase;
 }
+
+/* <=== Form ====> */
+.form-text {
+    color: #b2b2b2;
+}
+
+/* <=== Card ====> */
+.card {
+    background: #005678;
+    font-weight: bold;
+    box-shadow: 0px 0px 100px rgba(255, 42, 109, 0.3);
+    border: none;
+    color: #fefefe;
+}
+
+.card-title {
+    font-weight: bolder;
+    color: #d1f7ff;
+    text-shadow: 0 0 1px #d1f7ff;
+}
+
+h1, h2, p {
+    color: #fefefe;
+}

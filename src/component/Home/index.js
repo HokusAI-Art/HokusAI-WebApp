@@ -156,7 +156,7 @@ const Home = () => {
 
             { user &&
                 <Container style={{}}>
-                    <Container style={{margin: '10px'}}>
+                    <Container style={{margin: '10px'}} className={"centered"}>
                         <h2 style={{textAlign: "center"}}>Create Art</h2>
                         <Form>
                             <Form.Group className="mb-3" controlId="formTextInput">
@@ -244,7 +244,7 @@ const Home = () => {
                             {
                                 artworks.map((artwork) => {
                                     return (
-                                        <Card key={artwork.id} style={{ width: '18rem', margin: "10px" }}>
+                                        <Card key={artwork.id} style={{ width: '18rem', margin: "10px" }} className={"zoom"}>
                                             <Card.Img variant="top" src={artwork.imageUrl} />
                                             <Card.Body>
                                                 {

@@ -155,8 +155,8 @@ const Home = () => {
             </Container>
         </Navbar>
 
-        {user && <Container style={{}}>
-            <Container style={{margin: '10px'}}>
+        {user && <Container style={{}} >
+            <Container style={{margin: '10px'}} className={"centered"}>
                 <h2 style={{textAlign: "center"}}>Create Art</h2>
                 <Form>
                     <Form.Group className="mb-3" controlId="formTextInput">

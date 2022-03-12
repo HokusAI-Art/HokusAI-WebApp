@@ -51,7 +51,7 @@ const Landing = () => {
             <button className="cybr-btn" onClick={() => auth.signInWithPopup(provider)}>
                 Sign In With Google<span aria-hidden>_</span>
                 <span aria-hidden className="cybr-btn__glitch">Sign In With Google_</span>
-                <span aria-hidden className="cybr-btn__tag">UWU</span>
+                <span aria-hidden className="cybr-btn__tag">Fox</span>
             </button>
         </div>
     </section>}

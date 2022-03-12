@@ -289,7 +289,12 @@ const Home = () => {
                     })}
                 </div>
             </Container>
+            <div className={"centered"}>
+            <p1 >Made with</p1> <p1 className={"madeWith"}> love</p1> <p1 >🔥 pixray 🔥</p1>
+        </div>
+
         </Container>}
+        
     </div>);
 }
 

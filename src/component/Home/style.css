@@ -344,3 +344,7 @@ h1, h2, p {
     right: 0;
     top: 8px;
 }
+
+.madeWith {
+    text-decoration: line-through;
+}

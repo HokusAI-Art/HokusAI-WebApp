@@ -4,6 +4,8 @@
 
 Install node, npm, and yarn. 
 
+Note: node must be version 14 or up
+
 ## Get Started
 
 Create file called '.env.local' with the Firebase JSON credentials for a web application:

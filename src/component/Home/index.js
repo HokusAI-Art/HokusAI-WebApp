@@ -9,6 +9,8 @@ import {v4} from "uuid";
 import {image_loading_base64, image_loading_url, panda_base64} from "../../resource/image/sample-images";
 import NavbarItems from "../Navbar";
 
+import "./style.css";
+
 const Home = () => {
     // function to navigate between pages
     const navigate = useNavigate();
@@ -25,8 +27,12 @@ const Home = () => {
     const [textInput, setTextInput] = useState("");
 
     // allow user to set quality of image
-    const [quality, setQuality] = useState("draft");
-    const qualityOptions = [];
+    const qualityOptions = ['draft', 'normal'];
+    const [quality, setQuality] = useState(qualityOptions[0]);
+
+    // allow user to set iterations for image
+    const iterationOptions = ['very fast', 'fast', 'normal', 'slow'];
+    // const [quality, setQuality] = useState(qualityOptions[0]);
 
     /**
      * Use effect hook to run on page render
@@ -149,16 +155,42 @@ const Home = () => {
                                     setTextInput(event.target.value);
                                 }}/>
 
-                                <Form.Label>Quality</Form.Label>
-                                <DropdownButton id="dropdown-basic-button" title={quality}>
-                                    <Dropdown.Item onClick={() => {setQuality("draft")}}>draft</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {setQuality("normal")}}>normal</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {setQuality("better")}}>better</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {setQuality("best")}}>best</Dropdown.Item>
-                                </DropdownButton>
+                                {/*<Form.Label>Quality</Form.Label>*/}
+                                {/*<DropdownButton id="dropdown-basic-button" title={quality}>*/}
+                                {/*    <Dropdown.Item onClick={() => {setQuality("draft")}}>draft</Dropdown.Item>*/}
+                                {/*    <Dropdown.Item onClick={() => {setQuality("normal")}}>normal</Dropdown.Item>*/}
+                                {/*    <Dropdown.Item onClick={() => {setQuality("better")}}>better</Dropdown.Item>*/}
+                                {/*    <Dropdown.Item onClick={() => {setQuality("best")}}>best</Dropdown.Item>*/}
+                                {/*</DropdownButton>*/}
+
+                                <div className="mb-1">
+                                    <label htmlFor="quality" className="form-label">Quality</label><br/>
+
+                                    {
+                                        qualityOptions.map((qualityOption) => {
+                                            return (
+                                                <>
+                                                    <input key={`input-${qualityOption}`} type="radio" className="btn-check" name="quality" value={qualityOption} id={qualityOption} autoComplete="off" onClick={(event) => {
+                                                        console.log('set quality to ', event.target.value);
+                                                        setQuality(event.target.value);
+                                                    }}/>
+                                                    <label key={`label-${qualityOption}`} className="btn btn btn-secondary" htmlFor={qualityOption}>{qualityOption}</label>
+                                                </>
+                                            );
+                                        })
+                                    }
+
+
+
+                                    {/*<input type="radio" className="btn-check" name="quality" value="normal" id="quality2" autoComplete="off" />*/}
+                                    {/*<label className="btn btn btn-secondary" htmlFor="quality2">normal</label>*/}
+
+                                    <div id="emailHelp" className="form-text">Better quality takes longer time to generate</div>
+                                </div>
+
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" onClick={(e) => {
+                            <Button variant="primary" type="submit" className={"btn btn-primary btn-lg"} onClick={(e) => {
                                 e.preventDefault();
                                 generateImage();
                             }}>

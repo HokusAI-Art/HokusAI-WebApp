@@ -1,0 +1,48 @@
+.btn-check:checked+.btn-secondary {
+    background-color: #FF2D55;
+    border-color: #FF2D55;
+}
+
+.btn-secondary {
+    background-color: #eee;
+    border-color: #eee;
+    color: #333;
+    padding: 5px 12px;
+}
+
+label.btn {
+    margin-right: 5px;
+}
+
+.btn-secondary:hover {
+    background-color: #ddd;
+    border-color: #ddd;
+    color:#333;
+}
+
+.btn-primary:hover{
+    background-color: #FF2D55;
+    border-color: #FF2D55;
+}
+
+.btn-primary:focus {
+    background-color: #FF2D55;
+    border-color: #FF2D55;
+}
+
+.btn-primary {
+    background-color: #FF2D55;
+    border-color: #FF2D55;
+}
+
+.btn {
+    font-weight: 600;
+}
+
+.form-label {
+    margin-bottom: 0.25rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}

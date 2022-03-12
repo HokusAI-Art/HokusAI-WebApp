@@ -348,3 +348,9 @@ h1, h2, p {
 .madeWith {
     text-decoration: line-through;
 }
+
+@font-face {
+    font-family: cyberpunk;
+    src: url('../../resource/font/cyberpunk.ttf') format('.ttf');
+    font-display: swap;
+}

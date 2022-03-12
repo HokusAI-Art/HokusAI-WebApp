@@ -163,7 +163,7 @@ const Home = () => {
                      width="942px" height="130px">
                     <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"
                           y="53.5940000000001px">
-                        <tspan font-size="100px" font-family="Cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
+                        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
                     </text>
                 </svg>
 
@@ -294,7 +294,7 @@ const Home = () => {
         </div>
 
         </Container>}
-        
+
     </div>);
 }
 

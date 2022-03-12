@@ -28,11 +28,15 @@ const Home = () => {
 
     // allow user to set quality of image
     const qualityOptions = ['draft', 'normal'];
-    const [quality, setQuality] = useState(qualityOptions[0]);
+    const [quality, setQuality] = useState(undefined);
 
     // allow user to set iterations for image
     const iterationOptions = {'very fast': 30, 'fast': 100, 'normal': 200, 'slow': 300};
-    const [iterations, setIterations] = useState(iterationOptions[Object.keys(iterationOptions)]);
+    const [iterations, setIterations] = useState(undefined); // this sets default to first value in iterations options
+
+    // allow user to set drawer
+    const drawerOptions = ['vqgan', 'clipdraw', 'line_sketch', 'pixel'];
+    const [drawer, setDrawer] = useState(undefined);
 
     /**
      * Use effect hook to run on page render
@@ -71,6 +75,14 @@ const Home = () => {
     }, [navigate]);
 
     /**
+     * Method to check if all options are selected
+     * @returns {boolean} true if all options are selected
+     */
+    const notAllOptionsSelected = () => {
+        return !(quality && iterations && drawer);
+    }
+
+    /**
      * Function to create db object
      */
     const generateImage = () => {
@@ -103,7 +115,7 @@ const Home = () => {
             text: textInput,
             prompt: textInput,
             quality: quality,
-            drawer: 'vqgan',
+            drawer: drawer,
             aspect: 'widescreen',
             iterations: iterations,
             initImage: '',
@@ -176,15 +188,15 @@ const Home = () => {
                                 </div>
 
                                 <div className="mb-1">
-                                    <label htmlFor="quality" className="form-label">Iterations</label><br/>
+                                    <label htmlFor="iterations" className="form-label">Iterations</label><br/>
 
                                     {
                                         Object.keys(iterationOptions).map((iterationOption) => {
                                             return (
                                                 <>
                                                     <input key={`input-${iterationOption}`} type="radio" className="btn-check" name="iterations" value={iterationOption} id={`iterations-${iterationOption}`} autoComplete="off" onClick={(event) => {
-                                                        console.log('set iterations to ', event.target.value);
-                                                        setIterations(event.target.value);
+                                                        console.log('set iterations to ', iterationOptions[event.target.value]);
+                                                        setIterations(iterationOptions[event.target.value]);
                                                     }}/>
                                                     <label key={`label-${iterationOption}`} className="btn btn btn-secondary" htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
                                                 </>
@@ -195,9 +207,29 @@ const Home = () => {
                                     <div id="emailHelp" className="form-text">More iterations takes longer time to generate</div>
                                 </div>
 
+                                <div className="mb-1">
+                                    <label htmlFor="drawer" className="form-label">Type</label><br/>
+
+                                    {
+                                        drawerOptions.map((drawerOption) => {
+                                            return (
+                                                <>
+                                                    <input key={`input-${drawerOption}`} type="radio" className="btn-check" name="drawer" value={drawerOption} id={`drawer-${drawerOption}`}  onClick={(event) => {
+                                                        console.log('set drawer to ', event.target.value);
+                                                        setDrawer(event.target.value);
+                                                    }}/>
+                                                    <label key={`label-${drawerOption}`} className="btn btn btn-secondary" htmlFor={`drawer-${drawerOption}`}>{drawerOption}</label>
+                                                </>
+                                            );
+                                        })
+                                    }
+
+                                    <div id="emailHelp" className="form-text">Method that will be used for image generation</div>
+                                </div>
+
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" className={"btn btn-primary btn-lg"} onClick={(e) => {
+                            <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0} variant="primary" type="submit" className={"btn btn-primary btn-lg"} onClick={(e) => {
                                 e.preventDefault();
                                 generateImage();
                             }}>

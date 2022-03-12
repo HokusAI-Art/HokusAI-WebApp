@@ -29,7 +29,7 @@ const Home = () => {
     const [textInput, setTextInput] = useState("");
 
     // allow user to set quality of image
-    const qualityOptions = ['draft', 'normal'];
+    const qualityOptions = ['draft', 'normal', 'better', 'best'];
     const [quality, setQuality] = useState(undefined);
 
     // allow user to set iterations for image
@@ -214,7 +214,7 @@ const Home = () => {
                         </div>
 
                         <div className="mb-1">
-                            <label htmlFor="drawer" className="form-label">Type</label><br/>
+                            <label htmlFor="drawer" className="form-label">Style</label><br/>
 
                             {drawerOptions.map((drawerOption) => {
                                 return (<>

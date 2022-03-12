@@ -75,3 +75,7 @@ label.btn {
 h1, h2, p {
     color: #fefefe;
 }
+
+.centered {
+    text-align: center;
+}

@@ -167,7 +167,7 @@ const Home = () => {
                                     setTextInput(event.target.value);
                                 }}/>
 
-                                <div className="mb-1">
+                                <div className="mb-1 centered">
                                     <label htmlFor="quality" className="form-label">Quality</label><br/>
 
                                     {
@@ -187,7 +187,7 @@ const Home = () => {
                                     <div id="emailHelp" className="form-text">Better quality takes longer time to generate</div>
                                 </div>
 
-                                <div className="mb-1">
+                                <div className="mb-1 centered">
                                     <label htmlFor="iterations" className="form-label">Iterations</label><br/>
 
                                     {
@@ -207,7 +207,7 @@ const Home = () => {
                                     <div id="emailHelp" className="form-text">More iterations takes longer time to generate</div>
                                 </div>
 
-                                <div className="mb-1">
+                                <div className="mb-1 centered">
                                     <label htmlFor="drawer" className="form-label">Type</label><br/>
 
                                     {
@@ -229,7 +229,7 @@ const Home = () => {
 
                             </Form.Group>
 
-                            <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0} variant="primary" type="submit" className={"btn btn-primary btn-lg"} onClick={(e) => {
+                            <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0} variant="primary" type="submit" className={"centered btn btn-primary btn-lg"} onClick={(e) => {
                                 e.preventDefault();
                                 generateImage();
                             }}>

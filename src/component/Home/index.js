@@ -137,20 +137,22 @@ const Home = () => {
      * Render HTML
      */
     return (<div>
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" expand="lg">
             <Container>
                 <Navbar.Brand href="/home">HokusAI</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="navbarScroll">
                     <NavbarItems/>
                     {/*right aligned item of navbar*/}
-                    <Nav.Link href="/landing" onClick={() => {
+                    <button id='signout' className="cybr-btn" onClick={() => {
                         if (auth) {
                             signOut(auth);
                         }
                     }}>
-                        Sign Out
-                    </Nav.Link>
+                        Sign Out<span aria-hidden>_</span>
+                        <span aria-hidden className="cybr-btn__glitch">Sign Out_</span>
+                        <span aria-hidden className="cybr-btn__tag">Fox</span>
+                    </button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
@@ -163,7 +165,7 @@ const Home = () => {
                      width="942px" height="130px">
                     <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"
                           y="53.5940000000001px">
-                        <tspan font-size="100px" font-family="Cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
+                        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
                     </text>
                 </svg>
 
@@ -289,7 +291,14 @@ const Home = () => {
                     })}
                 </div>
             </Container>
+            <div className={"centered"}>
+                <p1>Made with</p1>
+                <p1 className={"madeWith"}> love</p1>
+                <p1>🔥 pixray 🔥</p1>
+            </div>
+
         </Container>}
+
     </div>);
 }
 

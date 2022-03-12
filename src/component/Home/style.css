@@ -344,3 +344,21 @@ h1, h2, p {
     right: 0;
     top: 8px;
 }
+
+.madeWith {
+    text-decoration: line-through;
+}
+
+@font-face {
+    font-family: cyberpunk;
+    src: url('../../resource/font/cyberpunk.ttf') format('.ttf');
+    font-display: swap;
+}
+
+#signout {
+    z-index: 9;
+    max-height: 100px;
+    min-width: 270px;
+    margin: 0;
+    transform: scale(0.7);
+}

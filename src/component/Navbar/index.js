@@ -1,5 +1,6 @@
 import {Nav} from "react-bootstrap";
 import {k_home_route, k_immersive_view_route} from "../../App";
+import './style.css';
 
 const NavbarItems = () => {
     return (

@@ -2,11 +2,11 @@ import Button from 'react-bootstrap/Button';
 import {useEffect, useState} from "react";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {useNavigate} from "react-router";
-import {k_home_route, k_immersive_view_route, k_landing_route} from "../../App";
-import {Card, Container, DropdownButton, Form, FormControl, Nav, Navbar, NavDropdown, Dropdown} from "react-bootstrap";
-import { doc, setDoc, getFirestore, collection, onSnapshot, query, where, orderBy} from "firebase/firestore";
+import {k_landing_route} from "../../App";
+import {Card, Container, Form, Nav, Navbar} from "react-bootstrap";
+import { doc, setDoc, getFirestore, collection, onSnapshot, query, orderBy} from "firebase/firestore";
 import {v4} from "uuid";
-import {image_loading_base64, image_loading_url, panda_base64} from "../../resource/image/sample-images";
+import {image_loading_url} from "../../resource/image/sample-images";
 import NavbarItems from "../Navbar";
 
 import "./style.css";
@@ -64,7 +64,7 @@ const Home = () => {
         const db = getFirestore();
 
         const q = query(collection(db, "art"), orderBy("createdAt", "desc"));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        onSnapshot(q, (querySnapshot) => {
             const documents = [];
             querySnapshot.forEach((doc) => {
                 documents.push(doc.data());

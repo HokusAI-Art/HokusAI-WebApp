@@ -126,7 +126,7 @@ const Home = () => {
         <div>
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/home">Hokus-AI</Navbar.Brand>
+                    <Navbar.Brand href="/home">HokusAI</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="navbarScroll">
                         <NavbarItems />

@@ -31,8 +31,8 @@ const Home = () => {
     const [quality, setQuality] = useState(qualityOptions[0]);
 
     // allow user to set iterations for image
-    const iterationOptions = ['very fast', 'fast', 'normal', 'slow'];
-    // const [quality, setQuality] = useState(qualityOptions[0]);
+    const iterationOptions = {'very fast': 30, 'fast': 100, 'normal': 200, 'slow': 300};
+    const [iterations, setIterations] = useState(iterationOptions[Object.keys(iterationOptions)]);
 
     /**
      * Use effect hook to run on page render
@@ -105,7 +105,7 @@ const Home = () => {
             quality: quality,
             drawer: 'vqgan',
             aspect: 'widescreen',
-            iterations: 100,
+            iterations: iterations,
             initImage: '',
             imageUrl: imageUrl,
             uid: userId,
@@ -155,14 +155,6 @@ const Home = () => {
                                     setTextInput(event.target.value);
                                 }}/>
 
-                                {/*<Form.Label>Quality</Form.Label>*/}
-                                {/*<DropdownButton id="dropdown-basic-button" title={quality}>*/}
-                                {/*    <Dropdown.Item onClick={() => {setQuality("draft")}}>draft</Dropdown.Item>*/}
-                                {/*    <Dropdown.Item onClick={() => {setQuality("normal")}}>normal</Dropdown.Item>*/}
-                                {/*    <Dropdown.Item onClick={() => {setQuality("better")}}>better</Dropdown.Item>*/}
-                                {/*    <Dropdown.Item onClick={() => {setQuality("best")}}>best</Dropdown.Item>*/}
-                                {/*</DropdownButton>*/}
-
                                 <div className="mb-1">
                                     <label htmlFor="quality" className="form-label">Quality</label><br/>
 
@@ -170,22 +162,37 @@ const Home = () => {
                                         qualityOptions.map((qualityOption) => {
                                             return (
                                                 <>
-                                                    <input key={`input-${qualityOption}`} type="radio" className="btn-check" name="quality" value={qualityOption} id={qualityOption} autoComplete="off" onClick={(event) => {
+                                                    <input key={`input-${qualityOption}`} type="radio" className="btn-check" name="quality" value={qualityOption} id={`quality-${qualityOption}`} autoComplete="off" onClick={(event) => {
                                                         console.log('set quality to ', event.target.value);
                                                         setQuality(event.target.value);
                                                     }}/>
-                                                    <label key={`label-${qualityOption}`} className="btn btn btn-secondary" htmlFor={qualityOption}>{qualityOption}</label>
+                                                    <label key={`label-${qualityOption}`} className="btn btn btn-secondary" htmlFor={`quality-${qualityOption}`}>{qualityOption}</label>
                                                 </>
                                             );
                                         })
                                     }
 
-
-
-                                    {/*<input type="radio" className="btn-check" name="quality" value="normal" id="quality2" autoComplete="off" />*/}
-                                    {/*<label className="btn btn btn-secondary" htmlFor="quality2">normal</label>*/}
-
                                     <div id="emailHelp" className="form-text">Better quality takes longer time to generate</div>
+                                </div>
+
+                                <div className="mb-1">
+                                    <label htmlFor="quality" className="form-label">Iterations</label><br/>
+
+                                    {
+                                        Object.keys(iterationOptions).map((iterationOption) => {
+                                            return (
+                                                <>
+                                                    <input key={`input-${iterationOption}`} type="radio" className="btn-check" name="iterations" value={iterationOption} id={`iterations-${iterationOption}`} autoComplete="off" onClick={(event) => {
+                                                        console.log('set iterations to ', event.target.value);
+                                                        setIterations(event.target.value);
+                                                    }}/>
+                                                    <label key={`label-${iterationOption}`} className="btn btn btn-secondary" htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
+                                                </>
+                                            );
+                                        })
+                                    }
+
+                                    <div id="emailHelp" className="form-text">More iterations takes longer time to generate</div>
                                 </div>
 
                             </Form.Group>

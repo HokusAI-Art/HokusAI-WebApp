@@ -1,8 +1,10 @@
 .navbar {
     background-color: #fdf800 !important;
     font-family: Cyber;
+    font-size: 150%;
 }
 
 .navbar-brand {
+    font-size: 110%;
     color: #ff2a6d !important;
 }

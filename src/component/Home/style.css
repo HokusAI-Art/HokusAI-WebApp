@@ -354,3 +354,11 @@ h1, h2, p {
     src: url('../../resource/font/cyberpunk.ttf') format('.ttf');
     font-display: swap;
 }
+
+#signout {
+    z-index: 9;
+    max-height: 100px;
+    min-width: 270px;
+    margin: 0;
+    transform: scale(0.7);
+}

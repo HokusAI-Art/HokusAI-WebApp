@@ -144,13 +144,15 @@ const Home = () => {
                 <Navbar.Collapse id="navbarScroll">
                     <NavbarItems/>
                     {/*right aligned item of navbar*/}
-                    <Nav.Link href="/landing" onClick={() => {
+                    <button id='signout' className="cybr-btn" onClick={() => {
                         if (auth) {
                             signOut(auth);
                         }
                     }}>
-                        Sign Out
-                    </Nav.Link>
+                        Sign Out<span aria-hidden>_</span>
+                        <span aria-hidden className="cybr-btn__glitch">Sign Out_</span>
+                        <span aria-hidden className="cybr-btn__tag">Fox</span>
+                    </button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
@@ -290,8 +292,10 @@ const Home = () => {
                 </div>
             </Container>
             <div className={"centered"}>
-            <p1 >Made with</p1> <p1 className={"madeWith"}> love</p1> <p1 >🔥 pixray 🔥</p1>
-        </div>
+                <p1>Made with</p1>
+                <p1 className={"madeWith"}> love</p1>
+                <p1>🔥 pixray 🔥</p1>
+            </div>
 
         </Container>}
 

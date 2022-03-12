@@ -4,10 +4,12 @@ import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {useNavigate} from "react-router";
 import {k_landing_route} from "../../App";
 import {Card, Container, Form, Nav, Navbar} from "react-bootstrap";
-import { doc, setDoc, getFirestore, collection, onSnapshot, query, orderBy} from "firebase/firestore";
+import {doc, setDoc, getFirestore, collection, onSnapshot, query, orderBy} from "firebase/firestore";
 import {v4} from "uuid";
 import {image_loading_url} from "../../resource/image/sample-images";
 import NavbarItems from "../Navbar";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import "./style.css";
 
@@ -125,7 +127,7 @@ const Home = () => {
             loading: true,
             createdAt: new Date(),
             updatedAt: new Date()
-        }, { merge: true }).then(() => {
+        }, {merge: true}).then(() => {
             console.log('created art');
             setTextInput('');
         });
@@ -134,147 +136,155 @@ const Home = () => {
     /**
      * Render HTML
      */
-    return (
-        <div>
-            <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand href="/home">HokusAI</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="navbarScroll">
-                        <NavbarItems />
-                        {/*right aligned item of navbar*/}
-                        <Nav.Link href="/landing" onClick={() => {
-                            if (auth) {
-                                signOut(auth);
-                            }
-                        }}>
-                            Sign Out
-                        </Nav.Link>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+    return (<div>
+        <Navbar bg="light" expand="lg">
+            <Container>
+                <Navbar.Brand href="/home">HokusAI</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="navbarScroll">
+                    <NavbarItems/>
+                    {/*right aligned item of navbar*/}
+                    <Nav.Link href="/landing" onClick={() => {
+                        if (auth) {
+                            signOut(auth);
+                        }
+                    }}>
+                        Sign Out
+                    </Nav.Link>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
 
-            { user &&
-                <Container style={{}}>
-                    <Container style={{margin: '10px'}} className={"centered"}>
-                        <h2 style={{textAlign: "center"}}>Create Art</h2>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formTextInput">
-                                <Form.Label>Prompt</Form.Label>
-                                <Form.Control type="text" placeholder="Enter thoughts"
-                                              value={textInput}
-                                              onChange={(event) => {
-                                    setTextInput(event.target.value);
-                                }}/>
+        {user && <Container style={{}}>
+            <Container style={{margin: '10px'}}>
+                <h2 style={{textAlign: "center"}}>Create Art</h2>
+                <Form>
+                    <Form.Group className="mb-3" controlId="formTextInput">
+                        <Form.Label>Prompt</Form.Label>
+                        <Form.Control type="text" placeholder="Enter thoughts"
+                                      value={textInput}
+                                      onChange={(event) => {
+                                          setTextInput(event.target.value);
+                                      }}/>
 
-                                <div className="mb-1 centered">
-                                    <label htmlFor="quality" className="form-label">Quality</label><br/>
+                        <div className="mb-1">
+                            <label htmlFor="quality" className="form-label">Quality</label><br/>
 
-                                    {
-                                        qualityOptions.map((qualityOption) => {
-                                            return (
-                                                <>
-                                                    <input key={`input-${qualityOption}`} type="radio" className="btn-check" name="quality" value={qualityOption} id={`quality-${qualityOption}`} autoComplete="off" onClick={(event) => {
-                                                        console.log('set quality to ', event.target.value);
-                                                        setQuality(event.target.value);
-                                                    }}/>
-                                                    <label key={`label-${qualityOption}`} className="btn btn btn-secondary" htmlFor={`quality-${qualityOption}`}>{qualityOption}</label>
-                                                </>
-                                            );
-                                        })
-                                    }
+                            {qualityOptions.map((qualityOption) => {
+                                return (<>
+                                    <input key={`input-${qualityOption}`} type="radio"
+                                           className="btn-check" name="quality" value={qualityOption}
+                                           id={`quality-${qualityOption}`} autoComplete="off"
+                                           onClick={(event) => {
+                                               console.log('set quality to ', event.target.value);
+                                               setQuality(event.target.value);
+                                           }}/>
+                                    <label key={`label-${qualityOption}`}
+                                           className="btn btn btn-secondary"
+                                           htmlFor={`quality-${qualityOption}`}>{qualityOption}</label>
+                                </>);
+                            })}
 
-                                    <div id="emailHelp" className="form-text">Better quality takes longer time to generate</div>
-                                </div>
+                            <div id="emailHelp" className="form-text">Better quality takes longer time to
+                                generate
+                            </div>
+                        </div>
 
-                                <div className="mb-1 centered">
-                                    <label htmlFor="iterations" className="form-label">Iterations</label><br/>
+                        <div className="mb-1">
+                            <label htmlFor="iterations" className="form-label">Iterations</label><br/>
 
-                                    {
-                                        Object.keys(iterationOptions).map((iterationOption) => {
-                                            return (
-                                                <>
-                                                    <input key={`input-${iterationOption}`} type="radio" className="btn-check" name="iterations" value={iterationOption} id={`iterations-${iterationOption}`} autoComplete="off" onClick={(event) => {
-                                                        console.log('set iterations to ', iterationOptions[event.target.value]);
-                                                        setIterations(iterationOptions[event.target.value]);
-                                                    }}/>
-                                                    <label key={`label-${iterationOption}`} className="btn btn btn-secondary" htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
-                                                </>
-                                            );
-                                        })
-                                    }
+                            {Object.keys(iterationOptions).map((iterationOption) => {
+                                return (<>
+                                    <input key={`input-${iterationOption}`} type="radio"
+                                           className="btn-check" name="iterations"
+                                           value={iterationOption} id={`iterations-${iterationOption}`}
+                                           autoComplete="off" onClick={(event) => {
+                                        console.log('set iterations to ', iterationOptions[event.target.value]);
+                                        setIterations(iterationOptions[event.target.value]);
+                                    }}/>
+                                    <label key={`label-${iterationOption}`}
+                                           className="btn btn btn-secondary"
+                                           htmlFor={`iterations-${iterationOption}`}>{iterationOption}</label>
+                                </>);
+                            })}
 
-                                    <div id="emailHelp" className="form-text">More iterations takes longer time to generate</div>
-                                </div>
+                            <div id="emailHelp" className="form-text">More iterations takes longer time to
+                                generate
+                            </div>
+                        </div>
 
-                                <div className="mb-1 centered">
-                                    <label htmlFor="drawer" className="form-label">Type</label><br/>
+                        <div className="mb-1">
+                            <label htmlFor="drawer" className="form-label">Type</label><br/>
 
-                                    {
-                                        drawerOptions.map((drawerOption) => {
-                                            return (
-                                                <>
-                                                    <input key={`input-${drawerOption}`} type="radio" className="btn-check" name="drawer" value={drawerOption} id={`drawer-${drawerOption}`}  onClick={(event) => {
-                                                        console.log('set drawer to ', event.target.value);
-                                                        setDrawer(event.target.value);
-                                                    }}/>
-                                                    <label key={`label-${drawerOption}`} className="btn btn btn-secondary" htmlFor={`drawer-${drawerOption}`}>{drawerOption}</label>
-                                                </>
-                                            );
-                                        })
-                                    }
+                            {drawerOptions.map((drawerOption) => {
+                                return (<>
+                                    <input key={`input-${drawerOption}`} type="radio"
+                                           className="btn-check" name="drawer" value={drawerOption}
+                                           id={`drawer-${drawerOption}`} onClick={(event) => {
+                                        console.log('set drawer to ', event.target.value);
+                                        setDrawer(event.target.value);
+                                    }}/>
+                                    <label key={`label-${drawerOption}`}
+                                           className="btn btn btn-secondary"
+                                           htmlFor={`drawer-${drawerOption}`}>{drawerOption}</label>
+                                </>);
+                            })}
 
-                                    <div id="emailHelp" className="form-text">Method that will be used for image generation</div>
-                                </div>
+                            <div id="emailHelp" className="form-text">Method that will be used for image
+                                generation
+                            </div>
+                        </div>
 
-                            </Form.Group>
+                    </Form.Group>
 
-                            <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0} variant="primary" type="submit" className={"centered btn btn-primary btn-lg"} onClick={(e) => {
+                    <Button disabled={notAllOptionsSelected() || textInput.trim().length === 0}
+                            variant="primary" type="submit" className={"btn btn-primary btn-lg"}
+                            onClick={(e) => {
                                 e.preventDefault();
                                 generateImage();
                             }}>
-                                Generate
-                            </Button>
-                        </Form>
-                    </Container>
+                        Generate
+                    </Button>
+                </Form>
+            </Container>
 
-                    <Container>
-                        <h2 style={{textAlign: "center"}}>Community Masterpieces</h2>
-                        <div style={{display: "flex", justifyContent: "center", alignContent: "center", alignItems: "center", flexWrap: "wrap"}}>
-                            {
-                                artworks.map((artwork) => {
-                                    return (
-                                        <Card key={artwork.id} style={{ width: '18rem', margin: "10px" }} className={"zoom"}>
-                                            <Card.Img variant="top" src={artwork.imageUrl} />
-                                            <Card.Body>
-                                                {
-                                                    artwork.loading ? (
-                                                        <>
-                                                            <Card.Title>Processing...</Card.Title>
-                                                            <Card.Text>
-                                                                Created by {artwork.user.displayName}
-                                                            </Card.Text>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Card.Title>{artwork.text}</Card.Title>
-                                                            <Card.Text>
-                                                                Created by {artwork.user.displayName}
-                                                            </Card.Text>
-                                                        </>
-                                                    )
-                                                }
-                                            </Card.Body>
-                                        </Card>
-                                    );
-                                })
-                            }
-                        </div>
-                    </Container>
-                </Container>
-            }
-        </div>
-    );
+            <Container>
+                <h2 style={{textAlign: "center"}}>Community Master Pieces</h2>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    flexWrap: "wrap"
+                }}>
+                    {artworks.map((artwork) => {
+                        return (<Card key={artwork.id} style={{width: '18rem', margin: "10px"}}>
+                            {artwork.loading ? (<>
+                                <Skeleton count={1} height={145} borderRadius='1rem' highlightColor={'#ddd'} style={{
+                                    height: "100%", width: "92%", marginLeft: "4%", marginTop: "0.5rem"
+                                }}/>
+                            </>) : (<>
+                                <Card.Img variant="top" src={artwork.imageUrl}/>
+                            </>)}
+                            <Card.Body>
+                                {artwork.loading ? (<>
+                                    <Card.Title>{artwork.text}</Card.Title>
+                                    <Card.Text>
+                                        Loading...
+                                    </Card.Text>
+                                </>) : (<>
+                                    <Card.Title>{artwork.text}</Card.Title>
+                                    <Card.Text>
+                                        Created by {artwork.user.displayName}
+                                    </Card.Text>
+                                </>)}
+                            </Card.Body>
+                        </Card>);
+                    })}
+                </div>
+            </Container>
+        </Container>}
+    </div>);
 }
 
 export default Home;

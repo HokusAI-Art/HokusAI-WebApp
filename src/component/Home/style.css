@@ -35,6 +35,11 @@ label.btn {
     border-color: #FF2D55;
 }
 
+.btn-primary:disabled {
+    background-color: #FF2D55;
+    border-color: #FF2D55;
+}
+
 .btn {
     font-weight: 600;
 }

@@ -160,14 +160,17 @@ const Home = () => {
         {user && <Container className='home-body' style={{}}>
             <form className="form" action="" method="get">
                 <div className="form__image"></div>
-                <svg className="form__logo"
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="942px" height="130px">
-                    <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"
-                          y="53.5940000000001px">
-                        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
-                    </text>
-                </svg>
+                {/*<svg className="form__logo"*/}
+                {/*     xmlns="http://www.w3.org/2000/svg"*/}
+                {/*     width="942px" height="130px">*/}
+                {/*    <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"*/}
+                {/*          y="53.5940000000001px">*/}
+
+                {/*        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create Art</tspan>*/}
+                {/*    </text>*/}
+                {/*</svg>*/}
+
+                <h1 style={{fontFamily: "cyberpunk", color: "#E5DD06"}}>Create Art</h1>
 
                 <div className="input">
                     <input id="name" type="text" className="input__element" placeholder=" "

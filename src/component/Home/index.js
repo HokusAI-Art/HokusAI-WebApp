@@ -3,13 +3,14 @@ import {useEffect, useState} from "react";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {useNavigate} from "react-router";
 import {k_landing_route} from "../../App";
-import {Card, Container, Form, Nav, Navbar} from "react-bootstrap";
+import {Card, Container, Form, Image, Nav, Navbar} from "react-bootstrap";
 import {doc, setDoc, getFirestore, collection, onSnapshot, query, orderBy} from "firebase/firestore";
 import {v4} from "uuid";
 import {image_loading_url} from "../../resource/image/sample-images";
 import NavbarItems from "../Navbar";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { getStorage, uploadBytes, ref, getDownloadURL } from "firebase/storage";
 
 import "./style.css";
 
@@ -39,6 +40,10 @@ const Home = () => {
     // allow user to set drawer
     const drawerOptions = ['vqgan', 'clipdraw', 'line_sketch', 'pixel'];
     const [drawer, setDrawer] = useState(undefined);
+
+    // allow user to set a target iamge
+    const [targetImageUrl, setTargetImageUrl] = useState("");
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     /**
      * Use effect hook to run on page render
@@ -120,17 +125,64 @@ const Home = () => {
             drawer: drawer,
             aspect: 'widescreen',
             iterations: iterations,
-            initImage: '',
+            initImage: targetImageUrl,
             imageUrl: imageUrl,
             uid: userId,
             user: userObj,
             loading: true,
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
+            targetImageUrl: targetImageUrl
         }, {merge: true}).then(() => {
             console.log('created art');
             setTextInput('');
         });
+    }
+
+    /**
+     * Method to upload target image
+     * @param files files array from html file input
+     */
+    const handleFileUpload = (files) => {
+        if (files) {
+            setUploadingImage(true);
+
+            if (files.length >= 1) {
+                const file = files[0];
+
+                console.log(file);
+
+                const storage = getStorage();
+
+                if (storage) {
+                    const storageRef = ref(storage, v4().toString());
+
+                    uploadBytes(storageRef, file).then((snapshot) => {
+                        getDownloadURL(snapshot.ref).then((downloadURL) => {
+                            console.log('Uploaded file available at', downloadURL);
+                            setTargetImageUrl(downloadURL);
+                            setUploadingImage(false);
+                        });
+                    }).catch((err) => {
+                        console.error(err);
+                        alert("Error uploading to storage bucket");
+                        setUploadingImage(false);
+                    });
+                }
+                else {
+                    alert("Error connecting to storage bucket");
+                    setUploadingImage(false);
+                }
+            }
+            else {
+                alert("Must select at least one file.");
+                setUploadingImage(false);
+            }
+        }
+        else {
+            alert("Error getting file from local machine.");
+            setUploadingImage(false);
+        }
     }
 
     /**
@@ -160,14 +212,17 @@ const Home = () => {
         {user && <Container className='home-body' style={{}}>
             <form className="form" action="" method="get">
                 <div className="form__image"></div>
-                <svg className="form__logo"
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="942px" height="130px">
-                    <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"
-                          y="53.5940000000001px">
-                        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create&#32;Art</tspan>
-                    </text>
-                </svg>
+                {/*<svg className="form__logo"*/}
+                {/*     xmlns="http://www.w3.org/2000/svg"*/}
+                {/*     width="942px" height="130px">*/}
+                {/*    <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" font-size="100px" x="0px"*/}
+                {/*          y="53.5940000000001px">*/}
+
+                {/*        <tspan font-size="100px" font-family="cyberpunk" fill="#E5DD06">Create Art</tspan>*/}
+                {/*    </text>*/}
+                {/*</svg>*/}
+
+                <h1 style={{fontFamily: "cyberpunk", color: "#E5DD06"}}>Create Art</h1>
 
                 <div className="input">
                     <input id="name" type="text" className="input__element" placeholder=" "
@@ -245,9 +300,22 @@ const Home = () => {
                         </div>
                     </div>
 
+                    <div className="mb-1">
+                        <label htmlFor="file-upload" className="form-label">Target Image</label><br/>
+                        { (targetImageUrl && targetImageUrl.trim().length > 0) &&
+                            <Image fluid={true} src={targetImageUrl}/>
+                        }
+                        <input disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                            const files = event?.target?.files;
+                            handleFileUpload(files);
+                        }} />
+                        <div id="emailHelp" className="form-text">Image to look similar to after generation
+                        </div>
+                    </div>
+
                 </Form.Group>
                 <button type="button" className="button"
-                        disabled={notAllOptionsSelected() || textInput.trim().length === 0} onClick={(e) => {
+                        disabled={notAllOptionsSelected() || textInput.trim().length === 0 || uploadingImage} onClick={(e) => {
                     e.preventDefault();
                     generateImage();
                 }}>

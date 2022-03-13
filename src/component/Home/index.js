@@ -35,7 +35,7 @@ const Home = () => {
     const [quality, setQuality] = useState(undefined);
 
     // allow user to set iterations for image
-    const iterationOptions = {'very fast': 30, 'fast': 100, 'normal': 200, 'slow': 300};
+    const iterationOptions = {'very fast': 50, 'fast': 100, 'normal': 200, 'slow': 300};
     const [iterations, setIterations] = useState(undefined); // this sets default to first value in iterations options
 
     // allow user to set drawer

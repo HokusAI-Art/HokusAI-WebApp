@@ -349,6 +349,15 @@ h1, h2, p {
     text-decoration: line-through;
 }
 
+<<<<<<< HEAD
+=======
+/*@font-face {*/
+/*    font-family: cyberpunk;*/
+/*    src: local('cyberpunk'), url('font/cyberpunk.ttf') format('.ttf');*/
+/*    font-display: swap;*/
+/*}*/
+
+>>>>>>> 46be329 (:sparkles: Add prompt explanation)
 #signout {
     z-index: 9;
     max-height: 100px;

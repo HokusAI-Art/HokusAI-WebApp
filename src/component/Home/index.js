@@ -338,18 +338,18 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="mb-1">
-                        <label htmlFor="file-upload-1" className="form-label">Target Image</label><br/>
-                        { (targetImageUrl && targetImageUrl.trim().length > 0) &&
-                            <Image fluid={true} src={targetImageUrl}/>
-                        }
-                        <input ref={targetImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-1" onChange={(event) => {
-                            const files = event?.target?.files;
-                            handleFileUpload(files, "targetImage");
-                        }} />
-                        <div id="emailHelp" className="form-text">Image to look similar to after generation
-                        </div>
-                    </div>
+                    {/*<div className="mb-1">*/}
+                    {/*    <label htmlFor="file-upload-1" className="form-label">Target Image</label><br/>*/}
+                    {/*    { (targetImageUrl && targetImageUrl.trim().length > 0) &&*/}
+                    {/*        <Image fluid={true} src={targetImageUrl}/>*/}
+                    {/*    }*/}
+                    {/*    <input ref={targetImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-1" onChange={(event) => {*/}
+                    {/*        const files = event?.target?.files;*/}
+                    {/*        handleFileUpload(files, "targetImage");*/}
+                    {/*    }} />*/}
+                    {/*    <div id="emailHelp" className="form-text">Image to look similar to after generation*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className="mb-1">
                         <label htmlFor="file-upload-2" className="form-label">Initial Image</label><br/>
@@ -364,18 +364,18 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="mb-1">
-                        <label htmlFor="file-upload-3" className="form-label">Image Prompt</label><br/>
-                        { (imagePromptUrl && imagePromptUrl.trim().length > 0) &&
-                            <Image fluid={true} src={imagePromptUrl}/>
-                        }
-                        <input ref={imagePromptUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-3" onChange={(event) => {
-                            const files = event?.target?.files;
-                            handleFileUpload(files, "imagePrompt");
-                        }} />
-                        <div id="emailHelp" className="form-text">Image to use as a prompt
-                        </div>
-                    </div>
+                    {/*<div className="mb-1">*/}
+                    {/*    <label htmlFor="file-upload-3" className="form-label">Image Prompt</label><br/>*/}
+                    {/*    { (imagePromptUrl && imagePromptUrl.trim().length > 0) &&*/}
+                    {/*        <Image fluid={true} src={imagePromptUrl}/>*/}
+                    {/*    }*/}
+                    {/*    <input ref={imagePromptUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-3" onChange={(event) => {*/}
+                    {/*        const files = event?.target?.files;*/}
+                    {/*        handleFileUpload(files, "imagePrompt");*/}
+                    {/*    }} />*/}
+                    {/*    <div id="emailHelp" className="form-text">Image to use as a prompt*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                 </Form.Group>
                 <button type="button" className="button"

@@ -42,12 +42,20 @@ const Home = () => {
     const drawerOptions = ['vqgan', 'clipdraw', 'line_sketch', 'pixel'];
     const [drawer, setDrawer] = useState(undefined);
 
-    // allow user to set a target iamge
+    // allow user to set an initial image
     const [initImageUrl, setInitImageUrl] = useState("");
-    const [targetImageUrl, setTargetImageUrl] = useState("");
-    const [uploadingImage, setUploadingImage] = useState(false);
-    const targetImageUploadBtnRef = React.useRef();
     const initImageUploadBtnRef = React.useRef();
+
+    // allow user to set a target image
+    const [targetImageUrl, setTargetImageUrl] = useState("");
+    const targetImageUploadBtnRef = React.useRef();
+
+    // allow user to set an image prompt
+    const [imagePromptUrl, setImagePromptUrl] = useState("");
+    const imagePromptUploadBtnRef = React.useRef();
+
+    // boolean set to true when file is uploading
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     /**
      * Use effect hook to run on page render
@@ -147,6 +155,7 @@ const Home = () => {
             initImage: initImageUrl,
             targetImage: targetImageUrl,
             imageUrl: imageUrl,
+            imagePrompt: [imagePromptUrl],
             uid: userId,
             user: userObj,
             loading: true,
@@ -186,6 +195,9 @@ const Home = () => {
                             }
                             else if (imageType === "initImage") {
                                 setInitImageUrl(downloadURL);
+                            }
+                            else if (imageType === "imagePrompt") {
+                                setImagePromptUrl(downloadURL);
                             }
                             else {
                                 console.error("Unknown image type");
@@ -325,11 +337,11 @@ const Home = () => {
                     </div>
 
                     <div className="mb-1">
-                        <label htmlFor="file-upload" className="form-label">Target Image</label><br/>
+                        <label htmlFor="file-upload-1" className="form-label">Target Image</label><br/>
                         { (targetImageUrl && targetImageUrl.trim().length > 0) &&
                             <Image fluid={true} src={targetImageUrl}/>
                         }
-                        <input ref={targetImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                        <input ref={targetImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-1" onChange={(event) => {
                             const files = event?.target?.files;
                             handleFileUpload(files, "targetImage");
                         }} />
@@ -338,15 +350,28 @@ const Home = () => {
                     </div>
 
                     <div className="mb-1">
-                        <label htmlFor="file-upload" className="form-label">Initial Image</label><br/>
+                        <label htmlFor="file-upload-2" className="form-label">Initial Image</label><br/>
                         { (initImageUrl && initImageUrl.trim().length > 0) &&
                             <Image fluid={true} src={initImageUrl}/>
                         }
-                        <input ref={initImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                        <input ref={initImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-2" onChange={(event) => {
                             const files = event?.target?.files;
                             handleFileUpload(files, "initImage");
                         }} />
                         <div id="emailHelp" className="form-text">Image to look similar to before generation
+                        </div>
+                    </div>
+
+                    <div className="mb-1">
+                        <label htmlFor="file-upload-3" className="form-label">Image Prompt</label><br/>
+                        { (imagePromptUrl && imagePromptUrl.trim().length > 0) &&
+                            <Image fluid={true} src={imagePromptUrl}/>
+                        }
+                        <input ref={imagePromptUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload-3" onChange={(event) => {
+                            const files = event?.target?.files;
+                            handleFileUpload(files, "imagePrompt");
+                        }} />
+                        <div id="emailHelp" className="form-text">Image to use as a prompt
                         </div>
                     </div>
 

@@ -147,8 +147,8 @@ const Home = () => {
             updatedAt: new Date(),
             targetImageUrl: targetImageUrl
         }, {merge: true}).then(() => {
-            console.log('created art');
-            setTextInput('');
+            // console.log('created art');
+            // setTextInput('');
             alert("Image is being generated!");
             // clearForm();
         });

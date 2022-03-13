@@ -155,7 +155,7 @@ const Home = () => {
             initImage: initImageUrl,
             targetImage: targetImageUrl,
             imageUrl: imageUrl,
-            imagePrompt: [imagePromptUrl],
+            imagePrompt: imagePromptUrl,
             uid: userId,
             user: userObj,
             loading: true,

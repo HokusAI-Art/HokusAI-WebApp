@@ -351,7 +351,7 @@ h1, h2, p {
 
 @font-face {
     font-family: cyberpunk;
-    src: url('../../resource/font/cyberpunk.ttf') format('.ttf');
+    src: local('cyberpunk'), url('font/cyberpunk.ttf') format('.ttf');
     font-display: swap;
 }
 

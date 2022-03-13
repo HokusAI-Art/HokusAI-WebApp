@@ -43,9 +43,11 @@ const Home = () => {
     const [drawer, setDrawer] = useState(undefined);
 
     // allow user to set a target iamge
+    const [initImageUrl, setInitImageUrl] = useState("");
     const [targetImageUrl, setTargetImageUrl] = useState("");
     const [uploadingImage, setUploadingImage] = useState(false);
-    const imageUploadButtonRef = React.useRef();
+    const targetImageUploadBtnRef = React.useRef();
+    const initImageUploadBtnRef = React.useRef();
 
     /**
      * Use effect hook to run on page render
@@ -92,13 +94,17 @@ const Home = () => {
     }
 
     /**
-     * Method to clear the form
+     * Clear the file inputs
      */
-    const clearForm = () => {
-        setTextInput("");
-        setTargetImageUrl("");
-        if (imageUploadButtonRef?.current) {
-            imageUploadButtonRef.current.value = "";
+    const clearFileInputs = () => {
+        if (targetImageUploadBtnRef?.current) {
+            targetImageUploadBtnRef.current.value = "";
+            setTargetImageUrl("");
+        }
+
+        if (initImageUploadBtnRef?.current) {
+            initImageUploadBtnRef.current.value = "";
+            setInitImageUrl("");
         }
     }
 
@@ -138,14 +144,14 @@ const Home = () => {
             drawer: drawer,
             aspect: 'widescreen',
             iterations: iterations,
-            initImage: targetImageUrl,
+            initImage: initImageUrl,
+            targetImage: targetImageUrl,
             imageUrl: imageUrl,
             uid: userId,
             user: userObj,
             loading: true,
             createdAt: new Date(),
             updatedAt: new Date(),
-            targetImageUrl: targetImageUrl
         }, {merge: true}).then(() => {
             // console.log('created art');
             // setTextInput('');
@@ -158,7 +164,7 @@ const Home = () => {
      * Method to upload target image
      * @param files files array from html file input
      */
-    const handleFileUpload = (files) => {
+    const handleFileUpload = (files, imageType) => {
         if (files) {
             setUploadingImage(true);
 
@@ -175,7 +181,15 @@ const Home = () => {
                     uploadBytes(storageRef, file).then((snapshot) => {
                         getDownloadURL(snapshot.ref).then((downloadURL) => {
                             console.log('Uploaded file available at', downloadURL);
-                            setTargetImageUrl(downloadURL);
+                            if (imageType === "targetImage") {
+                                setTargetImageUrl(downloadURL);
+                            }
+                            else if (imageType === "initImage") {
+                                setInitImageUrl(downloadURL);
+                            }
+                            else {
+                                console.error("Unknown image type");
+                            }
                             setUploadingImage(false);
                         });
                     }).catch((err) => {
@@ -320,11 +334,24 @@ const Home = () => {
                         { (targetImageUrl && targetImageUrl.trim().length > 0) &&
                             <Image fluid={true} src={targetImageUrl}/>
                         }
-                        <input ref={imageUploadButtonRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                        <input ref={targetImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
                             const files = event?.target?.files;
-                            handleFileUpload(files);
+                            handleFileUpload(files, "targetImage");
                         }} />
                         <div id="emailHelp" className="form-text">Image to look similar to after generation
+                        </div>
+                    </div>
+
+                    <div className="mb-1">
+                        <label htmlFor="file-upload" className="form-label">Initial Image</label><br/>
+                        { (initImageUrl && initImageUrl.trim().length > 0) &&
+                            <Image fluid={true} src={initImageUrl}/>
+                        }
+                        <input ref={initImageUploadBtnRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                            const files = event?.target?.files;
+                            handleFileUpload(files, "initImage");
+                        }} />
+                        <div id="emailHelp" className="form-text">Image to look similar to before generation
                         </div>
                     </div>
 

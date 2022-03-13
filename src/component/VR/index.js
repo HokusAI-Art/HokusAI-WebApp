@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState, Suspense} from "react";
+import React, {useEffect, useRef, useState, Suspense} from "react";
 import {useNavigate} from "react-router";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {k_home_route, k_immersive_view_route, k_landing_route} from "../../App";
@@ -56,20 +56,22 @@ const VR = () => {
 
     return (
         <div style={{backgroundColor: "black", background: "black", height: "100vh"}}>
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/home">Hokus-AI</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Brand href="/home">HokusAI</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="navbarScroll">
-                        <NavbarItems />
+                        <NavbarItems/>
                         {/*right aligned item of navbar*/}
-                        <Nav.Link href="/landing" onClick={() => {
+                        <button id='signout' className="cybr-btn" onClick={() => {
                             if (auth) {
                                 signOut(auth);
                             }
                         }}>
-                            Sign Out
-                        </Nav.Link>
+                            Sign Out<span aria-hidden>_</span>
+                            <span aria-hidden className="cybr-btn__glitch">Sign Out_</span>
+                            <span aria-hidden className="cybr-btn__tag">Fox</span>
+                        </button>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

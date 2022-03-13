@@ -182,7 +182,7 @@ Here are some cool resources to check out!
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/HokusAI-Art/HokusAI-WebApp.svg?style=for-the-badge
 [contributors-url]: https://github.com/HokusAI-Art/graphs/contributors
-[stars-shield]: https://img.shields.io/github/stars/HokusAI-Art/HokusAI-WebApp.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/HokusAI-Art/HokusAI-WebApp?style=for-the-badge
 [stars-url]: https://github.com/HokusAI-Art/HokusAI-WebApp/stargazers
 [issues-shield]: https://img.shields.io/github/issues/HokusAI-Art/HokusAI-WebApp.svg?style=for-the-badge
 [issues-url]: https://github.com/HokusAI-Art/HokusAI-WebApp/issues

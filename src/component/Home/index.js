@@ -11,6 +11,7 @@ import NavbarItems from "../Navbar";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { getStorage, uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import React from "react";
 
 import "./style.css";
 
@@ -44,6 +45,7 @@ const Home = () => {
     // allow user to set a target iamge
     const [targetImageUrl, setTargetImageUrl] = useState("");
     const [uploadingImage, setUploadingImage] = useState(false);
+    const imageUploadButtonRef = React.useRef();
 
     /**
      * Use effect hook to run on page render
@@ -87,6 +89,17 @@ const Home = () => {
      */
     const notAllOptionsSelected = () => {
         return !(quality && iterations && drawer);
+    }
+
+    /**
+     * Method to clear the form
+     */
+    const clearForm = () => {
+        setTextInput("");
+        setTargetImageUrl("");
+        if (imageUploadButtonRef?.current) {
+            imageUploadButtonRef.current.value = "";
+        }
     }
 
     /**
@@ -134,8 +147,10 @@ const Home = () => {
             updatedAt: new Date(),
             targetImageUrl: targetImageUrl
         }, {merge: true}).then(() => {
-            console.log('created art');
-            setTextInput('');
+            // console.log('created art');
+            // setTextInput('');
+            alert("Image is being generated!");
+            // clearForm();
         });
     }
 
@@ -305,7 +320,7 @@ const Home = () => {
                         { (targetImageUrl && targetImageUrl.trim().length > 0) &&
                             <Image fluid={true} src={targetImageUrl}/>
                         }
-                        <input disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
+                        <input ref={imageUploadButtonRef} disabled={uploadingImage} type="file" name="file-upload" onChange={(event) => {
                             const files = event?.target?.files;
                             handleFileUpload(files);
                         }} />

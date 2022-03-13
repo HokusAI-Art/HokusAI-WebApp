@@ -349,12 +349,6 @@ h1, h2, p {
     text-decoration: line-through;
 }
 
-/*@font-face {*/
-/*    font-family: cyberpunk;*/
-/*    src: local('cyberpunk'), url('font/cyberpunk.ttf') format('truetype');*/
-/*    font-display: swap;*/
-/*}*/
-
 #signout {
     z-index: 9;
     max-height: 100px;
